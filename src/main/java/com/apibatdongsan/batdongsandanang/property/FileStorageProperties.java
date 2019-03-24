@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:application.properties")
-@ConfigurationProperties(prefix = "app")
+@ConfigurationProperties(prefix = "file")
 public class FileStorageProperties {
     private String uploadDir;
 
