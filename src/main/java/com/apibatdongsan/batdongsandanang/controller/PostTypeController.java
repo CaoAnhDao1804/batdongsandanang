@@ -1,28 +1,44 @@
 package com.apibatdongsan.batdongsandanang.controller;
 
-import com.apibatdongsan.batdongsandanang.dto.ApiResponseDTO;
+import com.apibatdongsan.batdongsandanang.entity.PostType;
 import com.apibatdongsan.batdongsandanang.service.PostTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", maxAge = 1800)
 @RestController
+@RequestMapping("/api/post-type")
 public class PostTypeController {
 
     @Autowired
     PostTypeService postTypeService;
 
-    @GetMapping(value = "/post-type")
-    public ApiResponseDTO findAll() {
-        return new ApiResponseDTO(200, "Success", postTypeService.findAll());
+    @GetMapping(value = "/")
+    public ResponseEntity getAllPostType() {
+        return ResponseEntity.ok(postTypeService.getAll());
     }
 
-    @GetMapping(value = "/post-type/{id}")
-    public ApiResponseDTO getById(@PathVariable Long id) {
-        return new ApiResponseDTO(200, "Success", postTypeService.findById(id));
+    @PostMapping(value = "/")
+    public ResponseEntity creat(@RequestBody PostType postType) {
+        return ResponseEntity.ok(postTypeService.creatNew(postType));
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity getById(@PathVariable Long id) {
+        return ResponseEntity.ok(postTypeService.getById(id));
+    }
+
+    //change Name
+    @PutMapping(value = "/")
+    public ResponseEntity update(@RequestBody PostType postType) {
+        return ResponseEntity.ok(postTypeService.changeName(postType));
+    }
+
+    //change status
+    @PutMapping(value = "/{id}")
+    public ResponseEntity changeStatus(@PathVariable Long id) {
+        return ResponseEntity.ok(postTypeService.changeStatus(id));
     }
 
 }

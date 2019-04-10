@@ -31,20 +31,13 @@ public class ProductTypeController {
 
     //change Name
     @PutMapping(value = "/")
-    public ApiResponseDTO update(@RequestBody ProductType productType) {
-        return new ApiResponseDTO(200, "Success", productTypeService.changeName(productType));
+    public ResponseEntity update(@RequestBody ProductType productType) {
+        return ResponseEntity.ok(productTypeService.changeName(productType));
     }
 
     //change status
     @PutMapping(value = "/{id}")
-    public ApiResponseDTO changeStatus(@PathVariable Long id) {
-        return new ApiResponseDTO(200, "Success", productTypeService.changeStatus(id));
+    public ResponseEntity changeStatus(@PathVariable Long id) {
+        return ResponseEntity.ok(productTypeService.changeStatus(id));
     }
-
-
-
-
-
-
-
 }
