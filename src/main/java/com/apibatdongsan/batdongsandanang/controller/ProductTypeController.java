@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/product-type")
+@RequestMapping("/api/product-type")
 public class ProductTypeController {
 
     @Autowired
