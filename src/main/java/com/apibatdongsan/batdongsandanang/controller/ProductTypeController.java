@@ -20,8 +20,8 @@ public class ProductTypeController {
     }
 
     @PostMapping(value = "/")
-    public ApiResponseDTO creat(@RequestBody ProductType productType) {
-        return new ApiResponseDTO(200, "Success", productTypeService.creatNew(productType));
+    public ResponseEntity creat(@RequestBody ProductType productType) {
+        return ResponseEntity.ok(productTypeService.creatNew(productType));
     }
 
     @GetMapping(value = "/{id}")

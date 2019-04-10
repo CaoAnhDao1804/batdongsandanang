@@ -18,6 +18,7 @@ public class ProductTypeService {
     }
 
     public ProductType creatNew(ProductType productType) {
+        productType.setStatus(1L);
         return productTypeRepository.save(productType);
     }
 
