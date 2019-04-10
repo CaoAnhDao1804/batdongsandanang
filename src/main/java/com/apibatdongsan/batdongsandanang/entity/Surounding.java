@@ -19,4 +19,6 @@ public class Surounding {
     @NotNull(message = "Name couldn't be Null")
     @Size(min=5, max = 20, message="Name should have at least 5 characters and maximum 20 charaters")
     String name;
+
+    Long status;
 }

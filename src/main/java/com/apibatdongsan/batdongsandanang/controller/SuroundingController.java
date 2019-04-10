@@ -3,28 +3,35 @@ package com.apibatdongsan.batdongsandanang.controller;
 import com.apibatdongsan.batdongsandanang.entity.Surounding;
 import com.apibatdongsan.batdongsandanang.service.SuroundingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-
+@RequestMapping("/api/")
 public class SuroundingController {
 
     @Autowired
     SuroundingService suroundingService;
 
-    @PostMapping(value = "/surounding")
+    @PostMapping(value = "/surrounding")
     public Surounding create(@RequestBody Surounding surounding) {
         return suroundingService.create(surounding);
     }
 
-    @GetMapping(value = "/surounding")
+    @GetMapping(value = "/surrounding")
     public List<Surounding> getAll() {
         return suroundingService.getAll();
     }
 
+    @PutMapping(value = "/surrounding")
+    public ResponseEntity updateName(@RequestBody Surounding surounding) {
+        return ResponseEntity.ok(suroundingService.changeName(surounding));
+    }
+
+    @PutMapping(value = "/surrounding/{id}")
+    public ResponseEntity changeStatus(@PathVariable Long id) {
+        return ResponseEntity.ok(suroundingService.changeStatus(id));
+    }
 }
