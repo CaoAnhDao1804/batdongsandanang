@@ -4,6 +4,7 @@ import com.apibatdongsan.batdongsandanang.dto.ApiResponseDTO;
 import com.apibatdongsan.batdongsandanang.entity.ProductType;
 import com.apibatdongsan.batdongsandanang.service.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,8 +15,8 @@ public class ProductTypeController {
     ProductTypeService productTypeService;
 
     @GetMapping(value = "/")
-    public ApiResponseDTO getAllProductType() {
-        return new ApiResponseDTO(200, "Success", productTypeService.getAllProductType());
+    public ResponseEntity getAllProductType() {
+        return ResponseEntity.ok(productTypeService.getAllProductType());
     }
 
     @PostMapping(value = "/")
@@ -24,14 +25,23 @@ public class ProductTypeController {
     }
 
     @GetMapping(value = "/{id}")
-    public ApiResponseDTO getById(@PathVariable Long id) {
-        return new ApiResponseDTO(200, "Success", productTypeService.getById(id));
+    public ResponseEntity getById(@PathVariable Long id) {
+        return ResponseEntity.ok(productTypeService.getById(id));
     }
 
+    //change Name
     @PutMapping(value = "/")
     public ApiResponseDTO update(@RequestBody ProductType productType) {
-        return new ApiResponseDTO(200, "Success", productTypeService.update(productType));
+        return new ApiResponseDTO(200, "Success", productTypeService.changeName(productType));
     }
+
+    //change status
+    @PutMapping(value = "/{id}")
+    public ApiResponseDTO changeStatus(@PathVariable Long id) {
+        return new ApiResponseDTO(200, "Success", productTypeService.changeStatus(id));
+    }
+
+
 
 
 

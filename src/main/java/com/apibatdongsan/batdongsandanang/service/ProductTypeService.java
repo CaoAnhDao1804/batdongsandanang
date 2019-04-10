@@ -14,7 +14,7 @@ public class ProductTypeService {
     ProductTypeRepository productTypeRepository;
 
     public List<ProductType> getAllProductType() {
-        return productTypeRepository.findAll();
+        return productTypeRepository.findAllOrderByIdAsc();
     }
 
     public ProductType creatNew(ProductType productType) {
@@ -25,7 +25,21 @@ public class ProductTypeService {
         return productTypeRepository.findById(id).get();
     }
 
-    public ProductType update(ProductType productType) {
-        return productTypeRepository.save(productType);
+    public ProductType changeName(ProductType productType) {
+        ProductType OldproductType = productTypeRepository.findById(productType.getId()).get();
+        OldproductType.setName(productType.getName());
+
+        return productTypeRepository.save(OldproductType);
+    }
+
+    public ProductType changeStatus(Long id) {
+        ProductType oldProductType = productTypeRepository.findById(id).get();
+        if (oldProductType.getStatus() == 0) {
+            oldProductType.setStatus(1L);
+            return productTypeRepository.save(oldProductType);
+        } else {
+            oldProductType.setStatus(0L);
+            return productTypeRepository.save(oldProductType);
+        }
     }
 }
