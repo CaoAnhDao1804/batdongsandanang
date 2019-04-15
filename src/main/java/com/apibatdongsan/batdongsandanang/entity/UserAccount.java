@@ -9,10 +9,13 @@ import java.util.List;
 
 @Data
 @Entity
-public class User {
+public class UserAccount {
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    List<Post> posts;
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String fullname;
@@ -23,8 +26,5 @@ public class User {
     private Integer enable;
     private Date dateCreate;
     private Long idRole;
-
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    List<Post> posts;
+    private Long status;
 }

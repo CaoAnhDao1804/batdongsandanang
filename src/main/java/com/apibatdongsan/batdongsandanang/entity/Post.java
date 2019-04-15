@@ -41,7 +41,7 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
-    User user;
+    UserAccount user;
 
     @OneToMany(mappedBy = "ofPost")
     @JsonIgnore

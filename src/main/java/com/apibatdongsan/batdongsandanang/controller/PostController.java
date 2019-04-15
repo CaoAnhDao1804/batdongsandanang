@@ -12,6 +12,7 @@ public class PostController {
     @Autowired
     PostService postService;
 
+
     @PostMapping(value = "/api/post")
     public ApiResponseDTO create(@RequestBody PostDTO postDTO) {
         return new ApiResponseDTO(200, "Success", postService.create(postDTO));
