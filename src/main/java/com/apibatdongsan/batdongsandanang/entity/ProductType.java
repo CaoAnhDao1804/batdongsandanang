@@ -1,14 +1,11 @@
 package com.apibatdongsan.batdongsandanang.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -24,8 +21,12 @@ public class ProductType {
 
     Long status;
 
-    @OneToMany(mappedBy = "productType")
+    @OneToMany(mappedBy = "productType",fetch = FetchType.LAZY)
     @JsonIgnore
     List<Post> posts;
 
+    @Override
+    public String toString(){
+        return "ProductType: " +id;
+    }
 }

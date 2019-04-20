@@ -11,9 +11,8 @@ import java.util.List;
 @Entity
 public class UserAccount {
 
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    List<Post> posts;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,4 +26,9 @@ public class UserAccount {
     private Date dateCreate;
     private Long idRole;
     private Long status;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    List<Post> posts;
+
 }

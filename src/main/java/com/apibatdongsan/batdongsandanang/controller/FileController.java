@@ -1,8 +1,15 @@
 package com.apibatdongsan.batdongsandanang.controller;
 
 import com.apibatdongsan.batdongsandanang.dto.ApiResponseDTO;
+import com.apibatdongsan.batdongsandanang.dto.PostRequestDTO;
 import com.apibatdongsan.batdongsandanang.entity.Picture;
+import com.apibatdongsan.batdongsandanang.entity.PictureEntity;
+import com.apibatdongsan.batdongsandanang.entity.Post;
+import com.apibatdongsan.batdongsandanang.respository.PicturesRepository;
 import com.apibatdongsan.batdongsandanang.service.FileStorageService;
+import com.apibatdongsan.batdongsandanang.service.PictureService;
+import com.apibatdongsan.batdongsandanang.service.PostService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 1800)
@@ -27,6 +36,12 @@ public class FileController {
 
     @Autowired
     private FileStorageService fileStorageService;
+
+    @Autowired
+    private PictureService pictureService;
+
+    @Autowired
+    private PostService postService;
 
 
     @PostMapping("/api/picture")
@@ -45,7 +60,7 @@ public class FileController {
         return new ApiResponseDTO(200,"Created!", pictureAdded );
     }
 
-    @GetMapping("/downloadFile/{fileName:.+}")
+    @GetMapping("/api/images/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) throws IOException {
         // Load file as Resource
         Resource resource = fileStorageService.loadFileAsResource(fileName);
@@ -68,4 +83,28 @@ public class FileController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .body(resource);
     }
+
+    @DeleteMapping(value = "/api/post/picture/{id}")
+    public ResponseEntity<Boolean> deletePictureById(@PathVariable("id") Long id) {
+        pictureService.deletePictureById(id);
+        return ResponseEntity.ok(true);
+    }
+
+    @PostMapping(value = "/api/post/pictures/{idPost}")
+    @Consumes({"application/json", MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Object> addNewPictureForPost(@PathVariable("idPost") Long idPost, @RequestParam(value = "files", required = false) MultipartFile[] files) {
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Post post = postService.findById(idPost);
+            postService.addImages(post, files, null);
+            List<PictureEntity> pictures = postService.findPicturesById(idPost);
+            return ResponseEntity.ok(pictures);
+        } catch (InternalError | NullPointerException  e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+
 }

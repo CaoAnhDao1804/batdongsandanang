@@ -5,9 +5,11 @@ import lombok.Data;
 @Data
 public class PostDTO {
 
+    Long id;
+
     String name;
 
-    String desciption;
+    String description;
 
     Long acreage;
 

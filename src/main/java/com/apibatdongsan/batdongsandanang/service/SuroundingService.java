@@ -39,4 +39,8 @@ public class SuroundingService {
         }
         return suroundingRepository.save(surounding);
     }
+
+    public Surounding getById(Long id) {
+        return suroundingRepository.findById(id).get();
+    }
 }

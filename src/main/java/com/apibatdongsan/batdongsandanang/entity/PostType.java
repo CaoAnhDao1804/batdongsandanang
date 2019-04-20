@@ -3,10 +3,7 @@ package com.apibatdongsan.batdongsandanang.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -23,7 +20,13 @@ public class PostType {
 
     Long status;
 
-    @OneToMany(mappedBy = "postType")
+    @OneToMany(mappedBy = "postType", fetch = FetchType.LAZY)
     @JsonIgnore
     List<Post> posts;
+
+    @Override
+    public String toString(){
+        return "PostType: " +id;
+    }
+
 }
