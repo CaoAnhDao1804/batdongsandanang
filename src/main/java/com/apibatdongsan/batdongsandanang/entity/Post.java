@@ -72,6 +72,9 @@ public class Post {
                     nullable = false, updatable = false) })
     List<Utilities> utilities;
 
+    Long favoritePersons;
+    Long carePersons;
+
     @Override
     public String toString(){
         return "Post: " +id;

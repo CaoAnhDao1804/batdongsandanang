@@ -13,5 +13,6 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<UserAccount, Long> {
     @Query(value = "select user_account.* from user_account order by id ASC ", nativeQuery = true)
     List<UserAccount> findAllOrderByIdAsc();
+    UserAccount getByUsernameAndStatus(String name, Long status);
 
 }

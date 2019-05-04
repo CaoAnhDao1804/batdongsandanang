@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -66,5 +67,21 @@ public class UserService {
         }
     }
 
+    public UserAccount getByName(String username) {
+        UserAccount usersEntity = userRepository.getByUsernameAndStatus(username, 1L);
+        return usersEntity;
+    }
+
+    public UserAccount add(UserAccount usersEntity) {
+        if(usersEntity.getEnable() == null) {
+            usersEntity.setEnable(1);
+        }
+        usersEntity.setIdRole(2L);
+        usersEntity = userRepository.save(usersEntity);
+        if(usersEntity != null) {
+            return usersEntity;
+        }
+        return null;
+    }
 
 }
