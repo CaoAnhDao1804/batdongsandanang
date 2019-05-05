@@ -11,11 +11,26 @@ public class FavouriteService {
     @Autowired
     FavouriteRespository favouriteRespository;
 
-    public Favourite like ( Favourite favourite) {
+    public Favourite like(Favourite favourite) {
         return favouriteRespository.save(favourite);
     }
 
-    public void unlike (Long idLike) {
+    public void unlike(Long idLike) {
         favouriteRespository.deleteById(idLike);
+    }
+
+    public Long getIdByUserIdAndBookId(Long userId, Long postId) {
+        return favouriteRespository.getIdByPostIdandUserId(postId, userId);
+    }
+
+    public Favourite getById(Long id) {
+        return favouriteRespository.findById(id).get();
+    }
+
+    public Favourite save(Long userId, Long postId) {
+        Favourite  favourite = new Favourite();
+        favourite.setUserId(userId);
+        favourite.setPostId(postId);
+        return favouriteRespository.save(favourite);
     }
 }
