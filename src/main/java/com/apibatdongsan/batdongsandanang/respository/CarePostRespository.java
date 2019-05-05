@@ -14,4 +14,6 @@ public interface CarePostRespository extends JpaRepository<CarePost, Long > {
     Long getIdByPostIdandUserId(Long post_id, Long user_id);
 
     List<CarePost> findByUserId(Long userId);
+
+    List<CarePost> findByPostId(Long userId);
 }

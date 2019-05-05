@@ -68,4 +68,17 @@ public class PublicFavoriteController {
             throw new InternalErrorServerException("Internal Server Error");
         }
     }
+
+    @GetMapping("/all/{postId}")
+    public ResponseEntity getNumberFavoritePerson(@PathVariable("postId") Long postId) throws InternalErrorServerException {
+        try {
+            int sum = favouriteService.numberFavoritePersonByIdPost(postId);
+            return ResponseEntity.ok(sum);
+        } catch (InternalError | NullPointerException e){
+            throw new InternalErrorServerException("Internal Server Error");
+        }
+    }
+
+
+
 }

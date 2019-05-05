@@ -67,4 +67,14 @@ public class PublicCareController {
             throw new InternalErrorServerException("Internal Server Error");
         }
     }
+    @GetMapping("/all/{postId}")
+    public ResponseEntity getNumberCarePerson(@PathVariable("postId") Long postId) throws InternalErrorServerException {
+        try {
+            int sum = careService.numberCarePersonByIdPost(postId);
+            return ResponseEntity.ok(sum);
+        } catch (InternalError | NullPointerException e){
+            throw new InternalErrorServerException("Internal Server Error");
+        }
+    }
+
 }

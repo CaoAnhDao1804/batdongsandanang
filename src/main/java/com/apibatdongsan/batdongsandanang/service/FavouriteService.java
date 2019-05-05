@@ -53,4 +53,13 @@ public class FavouriteService {
 
         return posts;
     }
+
+    public int numberFavoritePersonByIdPost(Long postId) {
+        List<Favourite> favourites = favouriteRespository.findByPostId(postId);
+        if (favourites == null) {
+            return 0;
+        } else {
+            return favourites.size();
+        }
+    }
 }

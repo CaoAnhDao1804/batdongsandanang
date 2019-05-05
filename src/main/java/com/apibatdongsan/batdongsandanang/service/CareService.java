@@ -48,4 +48,13 @@ public class CareService {
 
         return posts;
     }
+
+    public int numberCarePersonByIdPost(Long postId) {
+        List<CarePost> carePosts = carePostRespository.findByPostId(postId);
+        if (carePosts == null) {
+            return 0;
+        } else {
+            return carePosts.size();
+        }
+    }
 }

@@ -14,4 +14,6 @@ public interface FavouriteRespository extends JpaRepository<Favourite, Long> {
     Long getIdByPostIdandUserId(Long post_id, Long user_id);
 
     List<Favourite> findByUserId(Long userId);
+
+    List<Favourite> findByPostId(Long postId);
 }
