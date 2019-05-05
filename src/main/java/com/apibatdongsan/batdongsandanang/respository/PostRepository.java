@@ -11,4 +11,6 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "select post.* from post order by id ASC ", nativeQuery = true)
     List<Post> findAllOrderByIdAsc();
+
+
 }

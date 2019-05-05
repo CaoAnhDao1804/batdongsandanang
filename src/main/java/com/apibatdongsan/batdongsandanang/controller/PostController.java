@@ -1,12 +1,9 @@
 package com.apibatdongsan.batdongsandanang.controller;
 
-import com.apibatdongsan.batdongsandanang.dto.ApiResponseDTO;
-import com.apibatdongsan.batdongsandanang.dto.PostDTO;
 import com.apibatdongsan.batdongsandanang.dto.PostRequestDTO;
-import com.apibatdongsan.batdongsandanang.entity.*;
+import com.apibatdongsan.batdongsandanang.entity.Post;
 import com.apibatdongsan.batdongsandanang.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.ws.rs.Consumes;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 public class PostController {
@@ -52,12 +45,11 @@ public class PostController {
     public ResponseEntity getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(postService.findById(id));
     }
+
     @GetMapping(value = "/api/post/pictures/{id}")
     public ResponseEntity getPictureByIdPost(@PathVariable("id") Long id) {
         return ResponseEntity.ok(postService.findPicturesById(id));
     }
-
-
 
 
 //
@@ -97,8 +89,6 @@ public class PostController {
     }
 
 
-
-
     //    @PutMapping(value = "/api/post/{id}")
 //    public ApiResponseDTO update(@RequestBody PostDTO postDTO, @PathVariable("id") Long id) {
 //        return new ApiResponseDTO(200, "Success", postService.update(postDTO, id));
@@ -107,8 +97,6 @@ public class PostController {
     public ResponseEntity changeStatus(@PathVariable Long id) {
         return ResponseEntity.ok(postService.changeStatus(id));
     }
-
-
 
 
 }
