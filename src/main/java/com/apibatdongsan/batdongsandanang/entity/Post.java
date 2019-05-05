@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -32,6 +33,8 @@ public class Post {
     Long bathrooms;
 
     Long status;
+
+    Date createDate;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
 //    @JsonIgnore

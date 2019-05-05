@@ -40,6 +40,23 @@ public class PostController {
     public ResponseEntity getAll() {
         return ResponseEntity.ok(postService.getAll());
     }
+    @GetMapping(value = "/api/post/most-favorite/{topNumber}")
+    public ResponseEntity getTopFavorite(@PathVariable("topNumber") int topNumber) {
+        return ResponseEntity.ok(postService.getTopFavorite(topNumber));
+    }
+
+    @GetMapping(value = "/api/post/most-care/{topNumber}")
+    public ResponseEntity getTopCare(@PathVariable("topNumber") int topNumber) {
+        return ResponseEntity.ok(postService.getTopCare(topNumber));
+    }
+
+    @GetMapping(value = "/api/post/newest/{topNumber}")
+    public ResponseEntity getTopNew(@PathVariable("topNumber") int topNumber) {
+        return ResponseEntity.ok(postService.getTopNew(topNumber));
+    }
+
+
+
 
     @GetMapping(value = "/api/post/{id}")
     public ResponseEntity getById(@PathVariable("id") Long id) {

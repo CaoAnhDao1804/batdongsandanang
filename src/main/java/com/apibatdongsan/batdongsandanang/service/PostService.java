@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -39,6 +40,9 @@ public class PostService {
 
     @Autowired
     UtilitieRepository utilitieRepository;
+
+    @Autowired
+    FavouriteRespository favouriteRespository;
 
 
     public Post create(PostDTO postDTO) {
@@ -159,6 +163,7 @@ public class PostService {
         post.setBedrooms(postRequestDTO.getBedrooms());
         post.setBathrooms(postRequestDTO.getBathrooms());
         post.setStatus(1L);
+        post.setCreateDate( new Date());
 
         PostType postType = postTypeRepository.findById(postRequestDTO.getPostTypeId()).get();
         post.setPostType(postType);
@@ -197,5 +202,22 @@ public class PostService {
     public List<PictureEntity> findPicturesById(Long id) {
         List<PictureEntity>  pictureEntities = picturesRepository.findPicturesByIdPost(id);
         return pictureEntities;
+    }
+
+    public List<Post> getTopFavorite(int topNumber) {
+        List<Post> posts = new ArrayList<>();
+        return posts;
+    }
+
+    public List<Post> getTopCare(int topNumber) {
+        List<Post> posts = new ArrayList<>();
+        return posts;
+
+    }
+
+    public List<Post> getTopNew(int topNumber) {
+        List<Post> posts = new ArrayList<>();
+        posts = postRepository.getTopNews();
+        return posts;
     }
 }

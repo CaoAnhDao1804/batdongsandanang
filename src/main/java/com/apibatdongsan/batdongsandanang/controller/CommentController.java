@@ -53,10 +53,11 @@ public class CommentController {
     }
 
     @DeleteMapping(value = "/api/comment/{idComment}")
-    public ApiResponseDTO delete(@PathVariable Long idComment){
+    public ResponseEntity<Boolean> delete(@PathVariable("idComment") Long idComment){
         commentService.delete(idComment);
-        return new ApiResponseDTO(200, "Deleted!", true);
+        return ResponseEntity.ok(true);
     }
+
 
     @GetMapping("/api/comment/post/{postId}")
     public ResponseEntity getAllCommentOfPost(@PathVariable("postId") Long postId) {

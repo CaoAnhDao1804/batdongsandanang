@@ -27,7 +27,7 @@ public class FavouriteService {
         favouriteRespository.deleteById(idLike);
     }
 
-    public Long getIdByUserIdAndBookId(Long userId, Long postId) {
+    public Long getIdByUserIdAndPostId(Long userId, Long postId) {
         return favouriteRespository.getIdByPostIdandUserId(postId, userId);
     }
 
@@ -39,6 +39,7 @@ public class FavouriteService {
         Favourite  favourite = new Favourite();
         favourite.setUserId(userId);
         favourite.setPostId(postId);
+//        int rows = postRepository.updatefavorites(postId);
         return favouriteRespository.save(favourite);
     }
 
