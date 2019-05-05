@@ -17,6 +17,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "SELECT post.* from post ORDER by create_date DESC limit (10);", nativeQuery = true)
     List<Post> getTopNews();
 
+    List<Post> findAllByUserIdOrderByIdAsc(Long modId);
+
 
 
 //    @Query(value = "UPDATE public.post SET   favorite_persons = favorite_persons +1 WHERE id = ?1", nativeQuery = true)

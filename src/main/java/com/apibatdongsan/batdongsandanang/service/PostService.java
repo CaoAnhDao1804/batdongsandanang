@@ -220,4 +220,8 @@ public class PostService {
         posts = postRepository.getTopNews();
         return posts;
     }
+
+    public List<Post> getPostofMod(Long modId) {
+        return postRepository.findAllByUserIdOrderByIdAsc(modId);
+    }
 }

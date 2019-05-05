@@ -40,6 +40,11 @@ public class PostController {
     public ResponseEntity getAll() {
         return ResponseEntity.ok(postService.getAll());
     }
+
+    @GetMapping(value = "/api/post/mod/{modId}")
+    public ResponseEntity getPostofMod(@PathVariable("modId") Long modId) {
+        return ResponseEntity.ok(postService.getPostofMod(modId));
+    }
     @GetMapping(value = "/api/post/most-favorite/{topNumber}")
     public ResponseEntity getTopFavorite(@PathVariable("topNumber") int topNumber) {
         return ResponseEntity.ok(postService.getTopFavorite(topNumber));

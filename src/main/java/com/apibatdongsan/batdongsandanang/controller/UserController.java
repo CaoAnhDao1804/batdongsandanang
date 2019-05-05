@@ -93,6 +93,35 @@ public class UserController {
                 throw new CustomizeDuplicatedException("length must be between 5 and 70", "password");
             }
             usersEntity.setPassword(EncrytedPasswordUtils.encrytePassword(usersEntity.getPassword()));
+            usersEntity.setIdRole(3L);
+
+            usersEntity = userService.add(usersEntity);
+
+            if(usersEntity == null) {
+                throw new InternalErrorServerException("Internal Server Error");
+            }
+
+        } catch (InternalError | NullPointerException e) {
+            throw new InternalErrorServerException("Internal Server Error");
+        }
+        return ResponseEntity.ok(usersEntity);
+    }
+
+    @PostMapping("/mod")
+    public ResponseEntity createNewMod(@Valid @RequestBody UserAccount usersEntity) throws CustomizeDuplicatedException, InternalErrorServerException {
+        try {
+            if(usersEntity == null) {
+                throw new CustomizeDuplicatedException("User is not blank", "user");
+            }
+            if(usersEntity != null && userService.getByName(usersEntity.getUsername()) != null) {
+                throw new CustomizeDuplicatedException("Username of user is exist", "username");
+            }
+
+            if(usersEntity.getPassword() == null || "".equals(usersEntity.getPassword())) {
+                throw new CustomizeDuplicatedException("length must be between 5 and 70", "password");
+            }
+            usersEntity.setPassword(EncrytedPasswordUtils.encrytePassword(usersEntity.getPassword()));
+            usersEntity.setIdRole(2L);
 
             usersEntity = userService.add(usersEntity);
 

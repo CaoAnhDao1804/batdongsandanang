@@ -73,10 +73,7 @@ public class UserService {
     }
 
     public UserAccount add(UserAccount usersEntity) {
-        if(usersEntity.getEnable() == null) {
-            usersEntity.setEnable(1);
-        }
-        usersEntity.setIdRole(2L);
+        usersEntity.setStatus(1L);
         usersEntity = userRepository.save(usersEntity);
         if(usersEntity != null) {
             return usersEntity;
