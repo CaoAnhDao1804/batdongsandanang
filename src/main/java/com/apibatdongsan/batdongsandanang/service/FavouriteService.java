@@ -1,15 +1,23 @@
 package com.apibatdongsan.batdongsandanang.service;
 
 import com.apibatdongsan.batdongsandanang.entity.Favourite;
+import com.apibatdongsan.batdongsandanang.entity.Post;
 import com.apibatdongsan.batdongsandanang.respository.FavouriteRespository;
+import com.apibatdongsan.batdongsandanang.respository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class FavouriteService {
 
     @Autowired
     FavouriteRespository favouriteRespository;
+
+    @Autowired
+    PostRepository postRepository;
 
     public Favourite like(Favourite favourite) {
         return favouriteRespository.save(favourite);
@@ -32,5 +40,17 @@ public class FavouriteService {
         favourite.setUserId(userId);
         favourite.setPostId(postId);
         return favouriteRespository.save(favourite);
+    }
+
+    public List<Post> getFavortitePostByUserId(Long userId) {
+        List<Favourite> favouritesOfUser = favouriteRespository.findByUserId(userId);
+        List<Post> posts = new ArrayList<>();
+
+        for (Favourite favourite: favouritesOfUser) {
+            Post post = postRepository.findById(favourite.getPostId()).get();
+            posts.add(post);
+        }
+
+        return posts;
     }
 }

@@ -2,6 +2,7 @@ package com.apibatdongsan.batdongsandanang.controller;
 
 import com.apibatdongsan.batdongsandanang.entity.CarePost;
 import com.apibatdongsan.batdongsandanang.entity.Favourite;
+import com.apibatdongsan.batdongsandanang.entity.Post;
 import com.apibatdongsan.batdongsandanang.exception.CustomizeDuplicatedException;
 import com.apibatdongsan.batdongsandanang.exception.InternalErrorServerException;
 import com.apibatdongsan.batdongsandanang.service.CareService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/favorite")
@@ -52,6 +54,16 @@ public class PublicFavoriteController {
                 throw new InternalErrorServerException("Internal Server Error");
             }
             return ResponseEntity.ok(favourite);
+        } catch (InternalError | NullPointerException e){
+            throw new InternalErrorServerException("Internal Server Error");
+        }
+    }
+
+    @GetMapping("/posts/{userId}")
+    public ResponseEntity getListFavoritePost(@PathVariable("userId") Long userId) throws InternalErrorServerException {
+        try {
+            List<Post> favoritePosts = favouriteService.getFavortitePostByUserId(userId);
+            return ResponseEntity.ok(favoritePosts);
         } catch (InternalError | NullPointerException e){
             throw new InternalErrorServerException("Internal Server Error");
         }

@@ -2,6 +2,7 @@ package com.apibatdongsan.batdongsandanang.controller;
 
 import com.apibatdongsan.batdongsandanang.entity.CarePost;
 import com.apibatdongsan.batdongsandanang.entity.Favourite;
+import com.apibatdongsan.batdongsandanang.entity.Post;
 import com.apibatdongsan.batdongsandanang.exception.CustomizeDuplicatedException;
 import com.apibatdongsan.batdongsandanang.exception.InternalErrorServerException;
 import com.apibatdongsan.batdongsandanang.service.CareService;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/care")
@@ -51,6 +53,16 @@ public class PublicCareController {
                 throw new InternalErrorServerException("Internal Server Error");
             }
             return ResponseEntity.ok(carePost);
+        } catch (InternalError | NullPointerException e){
+            throw new InternalErrorServerException("Internal Server Error");
+        }
+    }
+
+    @GetMapping("/posts/{userId}")
+    public ResponseEntity getListCarePost(@PathVariable("userId") Long userId) throws InternalErrorServerException {
+        try {
+            List<Post> carePosts = careService.getCarePostByUserId(userId);
+            return ResponseEntity.ok(carePosts);
         } catch (InternalError | NullPointerException e){
             throw new InternalErrorServerException("Internal Server Error");
         }
