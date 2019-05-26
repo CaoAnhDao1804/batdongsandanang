@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -15,4 +16,6 @@ public interface PostTypeRepository extends JpaRepository<PostType, Long> {
 
     @Query(value = "select post_type.* from post_type order by id ASC ", nativeQuery = true)
     List<PostType> findAllOrderByIdAsc();
+
+    Optional<PostType> findFirstByNameIgnoreCase(String name);
 }

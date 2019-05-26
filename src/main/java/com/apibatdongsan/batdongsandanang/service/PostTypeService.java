@@ -3,6 +3,7 @@ package com.apibatdongsan.batdongsandanang.service;
 import com.apibatdongsan.batdongsandanang.entity.Post;
 import com.apibatdongsan.batdongsandanang.entity.PostType;
 import com.apibatdongsan.batdongsandanang.entity.ProductType;
+import com.apibatdongsan.batdongsandanang.exception.BatDongSanException;
 import com.apibatdongsan.batdongsandanang.respository.PostTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,8 +39,15 @@ public class PostTypeService {
 
     public PostType changeName(PostType postType) {
         PostType oldPostType = postTypeRepository.findById(postType.getId()).get();
+        if (isChangePostName(postType, oldPostType) && isExistPostTypeName(postType.getName())){
+            throw new BatDongSanException("Loại bài đăng này đã tồn tại");
+        }
         oldPostType.setName(postType.getName());
         return postTypeRepository.save(oldPostType);
+    }
+
+    private boolean isChangePostName(PostType postType, PostType oldPostType) {
+        return !postType.getName().equalsIgnoreCase(oldPostType.getName());
     }
 
     public PostType changeStatus(Long id) {
@@ -50,5 +58,9 @@ public class PostTypeService {
             oldPostType.setStatus(0L);
         }
         return postTypeRepository.save(oldPostType);
+    }
+
+    public boolean isExistPostTypeName(String name) {
+        return postTypeRepository.findFirstByNameIgnoreCase(name).isPresent();
     }
 }

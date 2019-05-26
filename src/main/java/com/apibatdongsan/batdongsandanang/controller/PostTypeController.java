@@ -1,6 +1,7 @@
 package com.apibatdongsan.batdongsandanang.controller;
 
 import com.apibatdongsan.batdongsandanang.entity.PostType;
+import com.apibatdongsan.batdongsandanang.exception.BatDongSanException;
 import com.apibatdongsan.batdongsandanang.service.PostTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,10 @@ public class PostTypeController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity creat(@RequestBody PostType postType) {
+    public ResponseEntity create(@RequestBody PostType postType) {
+        if (postTypeService.isExistPostTypeName(postType.getName())){
+            throw new BatDongSanException("Loại bài đăng này đã tồn tại");
+        }
         return ResponseEntity.ok(postTypeService.creatNew(postType));
     }
 

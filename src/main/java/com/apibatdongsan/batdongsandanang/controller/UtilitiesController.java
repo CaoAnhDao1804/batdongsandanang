@@ -1,6 +1,7 @@
 package com.apibatdongsan.batdongsandanang.controller;
 
 import com.apibatdongsan.batdongsandanang.entity.Utilities;
+import com.apibatdongsan.batdongsandanang.exception.BatDongSanException;
 import com.apibatdongsan.batdongsandanang.service.UtilitieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,11 @@ public class UtilitiesController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity creat(@RequestBody Utilities Utilities) {
-        return ResponseEntity.ok(utilitieService.creatNew(Utilities));
+    public ResponseEntity creat(@RequestBody Utilities utilities) {
+        if (utilitieService.isExist(utilities.getName())){
+            throw new BatDongSanException("Loại bất động sản này đã tồn tại");
+        }
+        return ResponseEntity.ok(utilitieService.creatNew(utilities));
     }
 
     @GetMapping(value = "/{id}")

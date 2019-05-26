@@ -2,6 +2,7 @@ package com.apibatdongsan.batdongsandanang.controller;
 
 import com.apibatdongsan.batdongsandanang.dto.ApiResponseDTO;
 import com.apibatdongsan.batdongsandanang.entity.ProductType;
+import com.apibatdongsan.batdongsandanang.exception.BatDongSanException;
 import com.apibatdongsan.batdongsandanang.service.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ public class ProductTypeController {
 
     @PostMapping(value = "/")
     public ResponseEntity creat(@RequestBody ProductType productType) {
+        if (productTypeService.isExist(productType.getName())){
+            throw new BatDongSanException("Loại bất động sản này đã tồn tại");
+        }
         return ResponseEntity.ok(productTypeService.creatNew(productType));
     }
 
@@ -32,6 +36,9 @@ public class ProductTypeController {
     //change Name
     @PutMapping(value = "/")
     public ResponseEntity update(@RequestBody ProductType productType) {
+        if (productTypeService.isExist(productType.getName())){
+            throw new BatDongSanException("Loại bất động sản này đã tồn tại");
+        }
         return ResponseEntity.ok(productTypeService.changeName(productType));
     }
 

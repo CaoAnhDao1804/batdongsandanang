@@ -74,6 +74,7 @@ public class UserService {
 
     public UserAccount add(UserAccount usersEntity) {
         usersEntity.setStatus(1L);
+        usersEntity.setDateCreate(new Date());
         usersEntity = userRepository.save(usersEntity);
         if(usersEntity != null) {
             return usersEntity;

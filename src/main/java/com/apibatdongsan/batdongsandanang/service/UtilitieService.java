@@ -2,6 +2,7 @@ package com.apibatdongsan.batdongsandanang.service;
 
 import com.apibatdongsan.batdongsandanang.entity.ProductType;
 import com.apibatdongsan.batdongsandanang.entity.Utilities;
+import com.apibatdongsan.batdongsandanang.exception.BatDongSanException;
 import com.apibatdongsan.batdongsandanang.respository.UtilitieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,9 +29,17 @@ public class UtilitieService {
 
     public Utilities changeName(Utilities utilities) {
         Utilities oldUtilities = utilitieRepository.findById(utilities.getId()).get();
+
+        if (isChangeName(utilities, oldUtilities)&& isExist(utilities.getName())){
+            throw new BatDongSanException("Loại bất động sản này đã tồn tại");
+        }
         oldUtilities.setName(utilities.getName());
 
         return utilitieRepository.save(oldUtilities);
+    }
+
+    private boolean isChangeName(Utilities utilities, Utilities oldUtilities) {
+        return !utilities.getName().equalsIgnoreCase(oldUtilities.getName());
     }
 
     public Utilities changeStatus(Long id) {
@@ -42,5 +51,9 @@ public class UtilitieService {
             oldProductType.setStatus(0L);
             return utilitieRepository.save(oldProductType);
         }
+    }
+
+    public boolean isExist(String name) {
+        return utilitieRepository.findFirstByNameIgnoreCase(name).isPresent();
     }
 }

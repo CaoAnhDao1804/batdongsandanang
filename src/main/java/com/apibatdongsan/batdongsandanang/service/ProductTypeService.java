@@ -43,4 +43,8 @@ public class ProductTypeService {
             return productTypeRepository.save(oldProductType);
         }
     }
+
+    public boolean isExist(String name) {
+        return productTypeRepository.findFirstByName(name).isPresent();
+    }
 }

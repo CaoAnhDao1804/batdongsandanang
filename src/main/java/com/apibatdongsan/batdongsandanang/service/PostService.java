@@ -6,12 +6,14 @@ import com.apibatdongsan.batdongsandanang.entity.*;
 import com.apibatdongsan.batdongsandanang.respository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
@@ -223,5 +225,24 @@ public class PostService {
 
     public List<Post> getPostofMod(Long modId) {
         return postRepository.findAllByUserIdOrderByIdAsc(modId);
+    }
+
+    public boolean isExist(String name) {
+//        String namenormal = org.apache.commons.lang3.StringUtils.normalizeSpace(name);
+        return postRepository.findFirstByNameIgnoreCase(name).isPresent();
+    }
+
+    public boolean isExistExcepCurrent(PostRequestDTO postDTO) {
+        Optional<Post> post = postRepository.findFirstByNameIgnoreCase(postDTO.getName());
+        if (!post.isPresent()) {
+            return false;
+        }
+        Post post1 = post.get();
+        if (post1 == null) return false;
+        if (post1.getId() != postDTO.getId()) {
+            return true;
+        }
+        return false;
+
     }
 }

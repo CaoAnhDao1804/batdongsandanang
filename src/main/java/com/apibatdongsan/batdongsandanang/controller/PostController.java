@@ -2,6 +2,7 @@ package com.apibatdongsan.batdongsandanang.controller;
 
 import com.apibatdongsan.batdongsandanang.dto.PostRequestDTO;
 import com.apibatdongsan.batdongsandanang.entity.Post;
+import com.apibatdongsan.batdongsandanang.exception.BatDongSanException;
 import com.apibatdongsan.batdongsandanang.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,8 +84,12 @@ public class PostController {
 
         ObjectMapper mapper = new ObjectMapper();
         PostRequestDTO postDTO;
+
         try {
             postDTO = mapper.readValue(stringPostEntity, PostRequestDTO.class);
+            if (postService.isExist(postDTO.getName())){
+                throw new BatDongSanException("Ten bai dang da ton tai!");
+            }
             Post post = postService.createNewPost(postDTO);
             postService.addImages(post, files, fileCover);
             return ResponseEntity.ok(post);
@@ -101,7 +106,11 @@ public class PostController {
         ObjectMapper mapper = new ObjectMapper();
         PostRequestDTO postDTO;
         try {
+
             postDTO = mapper.readValue(stringPostEntity, PostRequestDTO.class);
+            if (postService.isExistExcepCurrent(postDTO)) {
+                throw new BatDongSanException("Tên bài đăng đã tồn tại!");
+            }
             Post post = postService.createNewPost(postDTO);
             return ResponseEntity.ok(post);
         } catch (InternalError | NullPointerException | IOException e) {

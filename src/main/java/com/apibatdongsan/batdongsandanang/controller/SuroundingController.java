@@ -1,6 +1,7 @@
 package com.apibatdongsan.batdongsandanang.controller;
 
 import com.apibatdongsan.batdongsandanang.entity.Surounding;
+import com.apibatdongsan.batdongsandanang.exception.BatDongSanException;
 import com.apibatdongsan.batdongsandanang.service.SuroundingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ public class SuroundingController {
 
     @PostMapping(value = "/surrounding")
     public Surounding create(@RequestBody Surounding surounding) {
+        if (suroundingService.isExistName(surounding.getName())){
+            throw new BatDongSanException("Loại môi trường xung quanh này đã tồn tại");
+        }
         return suroundingService.create(surounding);
     }
 

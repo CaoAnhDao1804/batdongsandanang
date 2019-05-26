@@ -1,6 +1,7 @@
 package com.apibatdongsan.batdongsandanang.controller;
 
 import com.apibatdongsan.batdongsandanang.entity.UserAccount;
+import com.apibatdongsan.batdongsandanang.exception.BatDongSanException;
 import com.apibatdongsan.batdongsandanang.exception.CustomizeDuplicatedException;
 import com.apibatdongsan.batdongsandanang.exception.InternalErrorServerException;
 import com.apibatdongsan.batdongsandanang.service.UserService;
@@ -114,7 +115,7 @@ public class UserController {
                 throw new CustomizeDuplicatedException("User is not blank", "user");
             }
             if(usersEntity != null && userService.getByName(usersEntity.getUsername()) != null) {
-                throw new CustomizeDuplicatedException("Username of user is exist", "username");
+                throw new BatDongSanException("Username đã tồn tại");
             }
 
             if(usersEntity.getPassword() == null || "".equals(usersEntity.getPassword())) {

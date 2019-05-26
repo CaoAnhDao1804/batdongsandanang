@@ -1,6 +1,7 @@
 package com.apibatdongsan.batdongsandanang.service;
 
 import com.apibatdongsan.batdongsandanang.entity.Surounding;
+import com.apibatdongsan.batdongsandanang.exception.BatDongSanException;
 import com.apibatdongsan.batdongsandanang.respository.SuroundingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,15 @@ public class SuroundingService {
 
     public Surounding changeName(Surounding surounding) {
         Surounding oldSurounding = suroundingRepository.findById(surounding.getId()).get();
+        if (isChangeName(surounding, oldSurounding) && isExistName(surounding.getName())){
+            throw new BatDongSanException("Loại môi trường xung quanh này đã tồn tại");
+        }
         oldSurounding.setName(surounding.getName());
         return suroundingRepository.save(oldSurounding);
+    }
+
+    private boolean isChangeName(Surounding surounding, Surounding oldSurounding) {
+        return !surounding.getName().equalsIgnoreCase(oldSurounding.getName());
     }
 
 
@@ -42,5 +50,9 @@ public class SuroundingService {
 
     public Surounding getById(Long id) {
         return suroundingRepository.findById(id).get();
+    }
+
+    public boolean isExistName(String name) {
+        return suroundingRepository.findFirstByNameIgnoreCase(name).isPresent();
     }
 }

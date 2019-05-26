@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Repository
@@ -15,4 +16,6 @@ public interface ProductTypeRepository extends JpaRepository<ProductType, Long> 
 
     @Query(value = "select product_type.* from product_type order by id ASC ", nativeQuery = true)
     List<ProductType> findAllOrderByIdAsc();
+
+    Optional<ProductType> findFirstByName(String name);
 }
