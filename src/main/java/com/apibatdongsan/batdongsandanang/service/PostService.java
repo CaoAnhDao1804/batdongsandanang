@@ -203,12 +203,12 @@ public class PostService {
     }
 
     public List<Post> getTopFavorite(int topNumber) {
-        List<Post> posts = new ArrayList<>();
+        List<Post> posts = postRepository.getTopFavourite();
         return posts;
     }
 
     public List<Post> getTopCare(int topNumber) {
-        List<Post> posts = new ArrayList<>();
+        List<Post> posts = postRepository.getTopCare();
         return posts;
 
     }
