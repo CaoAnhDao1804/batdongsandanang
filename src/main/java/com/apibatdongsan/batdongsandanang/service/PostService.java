@@ -245,4 +245,8 @@ public class PostService {
         return false;
 
     }
+
+    public List<Post> getAllPostEnable() {
+        return postRepository.getAllPostEnable();
+    }
 }

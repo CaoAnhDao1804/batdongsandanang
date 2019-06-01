@@ -87,7 +87,7 @@ public class UserController {
                 throw new CustomizeDuplicatedException("User is not blank", "user");
             }
             if(usersEntity != null && userService.getByName(usersEntity.getUsername()) != null) {
-                throw new CustomizeDuplicatedException("Username of user is exist", "username");
+                throw new CustomizeDuplicatedException("Tên đăng nhập đã tồn tại", "username");
             }
 
             if(usersEntity.getPassword() == null || "".equals(usersEntity.getPassword())) {

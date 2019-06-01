@@ -15,8 +15,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "select post.* from post order by id ASC ", nativeQuery = true)
     List<Post> findAllOrderByIdAsc();
 
-    @Query(value = "SELECT post.* from post ORDER by create_date DESC limit (10);", nativeQuery = true)
+    @Query(value = "SELECT post.* from post WHERE post.status = 1 ORDER by create_date DESC limit (10);", nativeQuery = true)
     List<Post> getTopNews();
+
+    @Query(value = "SELECT post.* from post WHERE post.status = 1 ORDER by id ASC ", nativeQuery = true)
+    List<Post> getAllPostEnable();
 
     List<Post> findAllByUserIdOrderByIdAsc(Long modId);
     Optional<Post> findFirstByNameIgnoreCase(String name);

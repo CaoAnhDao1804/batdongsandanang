@@ -61,18 +61,18 @@ public class Post {
     @JsonIgnore
     List<Comment> comments;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinTable(name = "surroundings_posts", joinColumns = {
             @JoinColumn(name = "post_id", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "surrounding_id",
-                    nullable = false, updatable = false) })
+                    nullable = false, updatable = true) })
     List<Surounding> suroundings;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "utilities_posts", joinColumns = {
             @JoinColumn(name = "post_id", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "utilities_id",
-                    nullable = false, updatable = false) })
+                    nullable = false, updatable = true) })
     List<Utilities> utilities;
 
     Long favoritePersons;

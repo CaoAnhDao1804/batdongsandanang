@@ -1,6 +1,7 @@
 package com.apibatdongsan.batdongsandanang.controller;
 
 import com.apibatdongsan.batdongsandanang.exception.BatDongSanException;
+import com.apibatdongsan.batdongsandanang.exception.CustomizeDuplicatedException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,11 @@ public class BatDongSanResponseException extends ResponseEntityExceptionHandler 
 
     @ExceptionHandler(BatDongSanException.class)
     protected ResponseEntity<Object> handleException(BatDongSanException exception, WebRequest webRequest) {
+        return new ResponseEntity<>(exception.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CustomizeDuplicatedException.class)
+    protected ResponseEntity<Object> handleException(CustomizeDuplicatedException exception, WebRequest webRequest) {
         return new ResponseEntity<>(exception.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 }

@@ -37,9 +37,14 @@ public class PostController {
     UserService userService;
 
 
-    @GetMapping(value = "/api/post")
+    @GetMapping(value = "/api/posts")
     public ResponseEntity getAll() {
         return ResponseEntity.ok(postService.getAll());
+    }
+
+    @GetMapping(value = "/api/post/enable")
+    public ResponseEntity getAllPostEnable() {
+        return ResponseEntity.ok(postService.getAllPostEnable());
     }
 
     @GetMapping(value = "/api/post/mod/{modId}")
