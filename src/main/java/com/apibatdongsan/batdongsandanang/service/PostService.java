@@ -97,15 +97,6 @@ public class PostService {
     public void addImages(Post post, MultipartFile[] files, MultipartFile fileCover) {
         try {
             List<PictureEntity> picturesEntityList = new ArrayList<>();
-//            List<PictureEntity> listEditPicture = post.getPictureEntities();
-//            if (listEditPicture != null && listEditPicture.size() > 0) {
-//                for (PictureEntity editPicture : listEditPicture) {
-//                    editPicture = picturesRepository.findById(editPicture.getId()).get();
-//                    if (editPicture != null) {
-//                        picturesEntityList.add(editPicture);
-//                    }
-//                }
-//            }
             if (fileCover != null) {
                 String fileName = fileStorageService.storeFile(fileCover);
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -179,16 +170,21 @@ public class PostService {
         List<Surounding> surroundings = new ArrayList<>();
         for (int i = 0; i < sur_ids.length; i++) {
 
-            Surounding surrounding = suroundingRepository.findById(Long.valueOf(sur_ids[i])).get();
-            surroundings.add(surrounding);
+            if (suroundingRepository.findById(Long.valueOf(sur_ids[i])).isPresent()) {
+                Surounding surrounding = suroundingRepository.findById(Long.valueOf(sur_ids[i])).get();
+                surroundings.add(surrounding);
+            }
         }
         post.setSuroundings(surroundings);
 
         String[] uti_ids = postRequestDTO.getUtilities();
         List<Utilities> utilities = new ArrayList<>();
         for (int i = 0; i < uti_ids.length; i++) {
-            Utilities newUtilities = utilitieRepository.findById(Long.valueOf(uti_ids[i])).get();
-            utilities.add(newUtilities);
+            if (utilitieRepository.findById(Long.valueOf(uti_ids[i])).isPresent()){
+                Utilities newUtilities = utilitieRepository.findById(Long.valueOf(uti_ids[i])).get();
+                utilities.add(newUtilities);
+            }
+
         }
         post.setUtilities(utilities);
 
