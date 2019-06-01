@@ -63,7 +63,7 @@ public class PostService {
 
         post.setPostType(postTypeRepository.findById(postDTO.getPostTypeId()).get());
         post.setProductType(productTypeRepository.findById(postDTO.getProductTypeId()).get());
-        post.setUser(userRepository.findById(postDTO.getUserId()).get());
+        post.setUserAccount(userRepository.findById(postDTO.getUserId()).get());
 
         return post;
     }
@@ -158,13 +158,14 @@ public class PostService {
         post.setStatus(1L);
         post.setCreateDate( new Date());
 
+        UserAccount userAccount = userRepository.findFirstById(postRequestDTO.getUserId());
+        post.setUserAccount(userAccount);
+
         PostType postType = postTypeRepository.findById(postRequestDTO.getPostTypeId()).get();
         post.setPostType(postType);
 
         ProductType productType = productTypeRepository.findById(postRequestDTO.getPostTypeId()).get();
         post.setProductType(productType);
-
-        post.setUser(userRepository.findById(postRequestDTO.getUserId()).get());
 
         String[] sur_ids = postRequestDTO.getSuroundings();
         List<Surounding> surroundings = new ArrayList<>();
@@ -220,7 +221,7 @@ public class PostService {
     }
 
     public List<Post> getPostofMod(Long modId) {
-        return postRepository.findAllByUserIdOrderByIdAsc(modId);
+        return postRepository.findAllByUserAccountIdOrderByIdAsc(modId);
     }
 
     public boolean isExist(String name) {

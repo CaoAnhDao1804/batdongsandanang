@@ -53,7 +53,7 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
 //    @JsonIgnore
-    UserAccount user;
+    UserAccount userAccount;
 
 
 

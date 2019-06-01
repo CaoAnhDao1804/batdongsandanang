@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 @Transactional
 public interface UserRepository extends JpaRepository<UserAccount, Long> {
+    UserAccount findFirstById(Long id);
+
     @Query(value = "select user_account.* from user_account order by id ASC ", nativeQuery = true)
     List<UserAccount> findAllOrderByIdAsc();
     UserAccount getByUsernameAndStatus(String name, Long status);
