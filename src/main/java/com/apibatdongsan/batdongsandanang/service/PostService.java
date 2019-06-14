@@ -157,6 +157,9 @@ public class PostService {
         post.setBathrooms(postRequestDTO.getBathrooms());
         post.setStatus(1L);
         post.setCreateDate( new Date());
+        post.setMailOwner(postRequestDTO.getMailOwner());
+        post.setNameOwner(postRequestDTO.getNameOwner());
+        post.setPhoneOwner(postRequestDTO.getPhoneOwner());
 
         UserAccount userAccount = userRepository.findFirstById(postRequestDTO.getUserId());
         post.setUserAccount(userAccount);

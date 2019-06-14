@@ -77,6 +77,9 @@ public class Post {
 
     Long favoritePersons;
     Long carePersons;
+    String nameOwner;
+    String mailOwner;
+    String phoneOwner;
 
     @Override
     public String toString(){
